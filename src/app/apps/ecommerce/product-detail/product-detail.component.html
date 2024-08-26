@@ -1,0 +1,106 @@
+<!-- page title -->
+<app-page-title [breadcrumbItems]="pageTitle" title="Détails de l'objet"></app-page-title>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    
+                    <div class="col-lg-8">
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <div [ngbNavOutlet]="nav" class="pt-0"></div>
+                                <!-- Informations sur l'objet -->
+                    <div *ngIf="isLoading" class="col-12 d-flex justify-content-center align-items-center" style="height: 80vh;">
+                        <a href="javascript:void(0);" class="text-danger display-6">
+                            <i class="mdi mdi-spin mdi-loading me-1"></i>Chargement
+                        </a>
+                    </div>
+                                <ul ngbNav #nav="ngbNav" class="nav-pills nav-justified">
+                                    <li ngbNavItem>
+                                        <ng-template ngbNavContent>
+                                            <img [src]="objet.image" alt=""
+                                                class="img-fluid mx-auto d-block rounded">
+                                        </ng-template>
+                                    </li>
+                                </ul>
+                            </div> <!-- end col -->
+                            <div class="col-lg-7">
+                                <div class="ps-xl-3 mt-3 mt-xl-0">
+                                    <a href="javascript:void(0)" class="text-primary">{{objet.proprietaire?.username}}</a>
+                                    <h4 class="mb-3"></h4>
+                                    <h3 class="mb-4">{{objet.nom}}</h3>
+                                    <h4>
+                                        <span 
+                                            [ngClass]="{
+                                                'badge': true,
+                                                'bg-soft-success': objet.disponible,
+                                                'text-success': objet.disponible,
+                                                'bg-soft-danger': !objet.disponible,
+                                                'text-danger': !objet.disponible,
+                                                'mb-4': true
+                                            }">
+                                            {{ objet.disponible ? 'Disponible' : 'Non Disponible' }}
+                                        </span>
+                                    </h4>
+                                    <p class="text-muted mb-4">{{objet.description}}</p>
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <div>
+                                                <p class="text-muted"><i
+                                                        class="mdi mdi-checkbox-marked-circle-outline h6 text-primary me-2"></i>
+                                                    Echange sécurisé</p>
+                                                <p class="text-muted"><i
+                                                        class="mdi mdi-checkbox-marked-circle-outline h6 text-primary me-2"></i>
+                                                    Discussion instantané entre echangeurs</p>
+                                                <p class="text-muted"><i
+                                                        class="mdi mdi-checkbox-marked-circle-outline h6 text-primary me-2"></i>
+                                                    Satisfait ou retourné</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-warning waves-effect waves-light" (click)="discuter(objet.proprietaire?.id)">
+                                        <span class="btn-label"><i class="mdi mdi-forum" ></i></span>Discuter
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- QR Code -->
+                    <div class="col-lg-4">
+                        <div class="ps-xl-3 mt-3 mt-xl-0">
+                            <ng-container *ngIf="objet; else loadQR">
+                                <div id="status-chart">
+                                    <qrcode
+                                        [qrdata]="(objet.id)!.toString()"
+                                        [width]="256"
+                                        [errorCorrectionLevel]="'M'"
+                                    ></qrcode>
+                                </div>
+                            </ng-container>
+                            <ng-template #loadQR>
+                                <div class="text-center my-4">
+                                    <a href="javascript:void(0);" class="text-danger display-6">
+                                        <i class="mdi mdi-spin mdi-loading me-1"></i>chargement
+                                    </a>
+                                </div>  
+                            </ng-template>
+                        </div>
+                    </div>
+                </div>
+                <!-- end row -->
+                <div class="table-responsive mt-4">
+                    <hr>
+                    <div class="text-end mt-3">
+                        <button type="button" *ngIf="objet.disponible" class="btn btn-success waves-effect waves-light"  [routerLink]="['../../proposition/details']"
+                        [queryParams]="{ id: objet.id}">
+                            <span class="btn-label"><i class="mdi mdi-swap-horizontal"></i></span>Proposer un échange
+                        </button>
+                    </div>
+                </div>                
+            </div>
+        </div> <!-- end card-->
+    </div> <!-- end col-->
+</div>
+<!-- end row-->

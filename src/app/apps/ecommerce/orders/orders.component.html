@@ -1,0 +1,30 @@
+<!-- page title -->
+<app-page-title [breadcrumbItems]="pageTitle" title="Liste des propositions"></app-page-title>
+
+<div *ngIf="isLoading" class="col-12 d-flex justify-content-center align-items-center" style="height: 80vh;">
+    <a href="javascript:void(0);" class="text-danger display-6">
+        <i class="mdi mdi-spin mdi-loading me-1"></i>Chargement
+    </a>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row mb-2">
+                    <div class="col-lg-8">
+                    </div>
+                </div>
+                <app-ui-preloader [display]="loading"></app-ui-preloader>
+                <!-- order table -->
+                <!-- product table -->
+                <app-advanced-table #advancedTable (handleTableLoad)="handleTableLoad($event)" [tableData]="propositions"
+                    [columns]="columns" [pagination]="true" [hasRowSelection]="true" [isSearchable]="false"
+                    (search)="searchData($event)" [isSortable]="false" tableClasses="table-centered"
+                    theadClasses="table-light">
+                </app-advanced-table>
+            </div> <!-- end card-body-->
+        </div> <!-- end card-->
+    </div> <!-- end col -->
+</div>
+<!-- end row -->

@@ -1,0 +1,111 @@
+<!-- page title -->
+<app-page-title [breadcrumbItems]="pageTitle" title="Mes Objets"></app-page-title>
+
+<div class="row">
+    <div class="col-xl-8 order-xl-1 order-2">
+        <div class="card mb-2">
+            <div class="card-body">
+                <div class="row justify-content-between">
+                    <div class="col-auto">
+                        <form class="d-flex flex-wrap align-items-center">
+                            <label for="inputPassword2" class="visually-hidden">Recherche</label>
+                            <div class="me-3">
+                                <input type="search" class="form-control my-1 my-lg-0" id="inputPassword2" name="search"
+                                    placeholder="recherche..." [(ngModel)]="searchTerm"
+                                    (ngModelChange)="searchData($event)">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-lg-4">
+                    </div><!-- end col-->
+                </div> <!-- end row -->
+            </div> <!-- end card-body-->
+        </div> <!-- end card-->
+
+        <div class="card mb-2" *ngFor="let o of mesObjet">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-sm-4">
+                        <div class="d-flex align-items-start">
+                            <img class="d-flex align-self-center me-3 rounded-circle" [src]="o.img"
+                                alt="Generic placeholder image" height="64">
+                            <div class="w-100">
+                                <h4 class="mt-0 mb-2 font-16">{{o.nom}}</h4>
+                                <p class="mb-1"><b>description:</b> {{o.description}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                     
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="text-center mt-3 mt-sm-0">
+                            <div class="badge font-14 bg-soft-info text-info p-1">   <p class="mb-1 mt-3 mt-sm-0"><i class="mdi mdi-email me-1"></i> {{o.proprietaire.email}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="text-sm-end">
+                            <button  class=" btn-primary" (click)="agrandir(o)"> 
+                                <i class="fe-image"></i>Agrandir
+                            </button>
+                            <button class="btn-danger" style="margin-left: 10px;" (click)="voir(o)"> 
+                                <i class="mdi mdi-eye"></i>Voir
+                            </button>
+                        </div>
+                    </div> <!-- end col-->
+                </div> <!-- end row -->
+            </div>
+        </div> <!-- end card-->
+
+
+        <div class="text-center my-4">
+            <a href="javascript:void(0);" class="text-danger"><i class="mdi mdi-spin mdi-loading me-1"></i> charger plus
+            </a>
+        </div>
+
+    </div> <!-- end col -->
+    <div class="col-xl-4 order-xl-2 order-1" *ngIf="isQrView; else noQrView">
+        <div class="card" dir="ltr">
+            <div class="card-body">
+                <h4 class="header-title mb-3">QR code</h4>
+                <div class="text-center">
+                    <div id="status-chart" *ngIf="objetSelected; else loadQR">
+                        <qrcode
+                        [qrdata]="(objetSelected.id).toString()"
+                        [width]="256"
+                        [errorCorrectionLevel]="'M'"
+                      ></qrcode>
+                      <h1 class="display-4">{{objetSelected.nom}}</h1>
+                    </div>
+                    <ng-template #loadQR>
+                        <div class="text-center my-4">
+                            <a href="javascript:void(0);" class="text-danger display-6"><i class="mdi mdi-spin mdi-loading me-1"></i>chargement
+                            </a>
+                        </div>  
+                    </ng-template>
+                </div>
+            </div>
+        </div> <!-- end card-->
+    </div>
+    
+    <ng-template #noQrView>
+        <div class="col-xl-4 order-xl-2 order-1">
+            <div class="card" dir="ltr">
+                <div class="card-body">
+                    <h4 class="header-title mb-3">Informations</h4>
+                    <div class="text-center" *ngIf="objetSelected">
+                        <div id="status-chart">
+                            <img [src]="objetSelected.img" alt="information" class="rounded me-1 mb-3 mb-sm-0 img-fluid">
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- end card-->
+        </div>
+    </ng-template>
+    
+    <!-- end col -->
+</div>
+<!-- end row -->
+
+<!-- M -->

@@ -1,0 +1,106 @@
+<div class="card">
+    <div class="card-body py-2 px-3 border-bottom border-light">
+        <div class="row justify-content-between py-1">
+            <div class="col-sm-7">
+                <div class="d-flex align-items-start">
+                    <img src='../../../../assets/images/users/user-3.jpg' class="me-2 rounded-circle" height="36" [alt]="selectedDiscu.sender.username">
+                    <div>
+                        <h5 class="mt-0 mb-0 font-15">
+                            <a [routerLink]="['../contacts/profile']" class="text-reset">{{selectedDiscu.sender.username}}</a>
+                        </h5>
+                        <p class="mt-1 mb-0 text-muted font-12">
+                            <small class="mdi mdi-circle text-success"></small> Online
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-auto">
+                <div id="tooltips-container">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body position-relative">
+        <app-ui-preloader [display]="loading"></app-ui-preloader>
+        <ngx-simplebar style="height: 460px">
+            <!-- messages start -->
+            <ul class="conversation-list">
+                <li class="clearfix" *ngFor="let message of messages"
+                    [ngClass]="{'odd': message.sender?.id === toUser?.id}">
+                    <div class="chat-avatar">
+                        <img *ngIf="message.sender?.id === toUser?.id" src="../../../../assets/images/users/user-3.jpg" class="rounded" [alt]="message.sender.username">
+                        <img *ngIf="message.sender?.id !== toUser?.id" src="../../../../assets/images/users/user-4.jpg" class="rounded" [alt]="message.sender.username">
+                        <i>{{message.event_date | date:'HH:mm dd/MM'}}</i>
+                    </div>
+                    <div class="conversation-text">
+                        <div class="ctext-wrap">
+                            <i>{{message.sender.username}}</i>
+                            <p>
+                                {{message.message}}
+                            </p>
+                        </div>
+                    </div>
+                    
+                </li>
+            </ul>
+            <!-- messages end -->
+        </ngx-simplebar>
+
+        <!-- new message form -->
+        <div class="row">
+            <div class="col">
+                <div class="mt-3 bg-light p-3 rounded">
+                    <form novalidate="" name="chat-form" id="chat-form"
+                        (ngSubmit)="chatForm.form.valid && sendChatMessage()" #chatForm="ngForm">
+                        <div class="row">
+                            <div class="col mb-2 mb-sm-0">
+                                <input type="text" class="form-control border-0" placeholder="Enter your text"
+                                    [(ngModel)]="newMessage" name="message" #message="ngModel"
+                                    [ngClass]="{'is-invalid': chatForm.submitted && message.invalid && (message.dirty || message.touched)}"
+                                    required />
+
+                                <div *ngIf="chatForm.submitted && message.invalid && (message.dirty || message.touched)"
+                                    class="invalid-feedback">
+                                    Please enter your messsage
+                                </div>
+
+                            </div>
+                            <div class="col-sm-auto">
+                                <div class="btn-group">
+                                    <a href="javascript:void(0)" class="btn btn-light"><i class="fe-paperclip"></i></a>
+
+                                    <button type="submit" class="btn btn-success chat-send w-100"
+                                        [disabled]="!chatForm.form.valid"><i class='fe-send'></i></button>
+                                </div>
+                            </div> 
+                        </div> 
+                    </form>
+                </div>
+            </div> <!-- end col-->
+        </div>
+        <!-- end row -->
+    </div> <!-- end card-body -->
+</div> <!-- end card -->
+
+
+
+
+<!-- reusable templates -->
+<ng-template #ChatMessageDropdown let-message="message">
+    <div class="conversation-actions" ngbDropdown>
+        <button ngbDropdownToggle class="btn btn-sm btn-link" id="chatMessageDropdown" href="javascript:void(0)"
+            aria-expanded="false">
+            <i class="mdi mdi-dots-vertical font-16"></i>
+        </button>
+        <div ngbDropdownMenu aria-labelledby="chatMessageDropdown"
+            [class]="message.sender?.id !== toUser?.id ? 'dropdown-menu-end' : ''">
+            <!-- item -->
+            <a ngbDropdownItem [routerLink]="'.'">Copy Message</a>
+            <!-- item-->
+            <a ngbDropdownItem [routerLink]="'.'">Edit</a>
+            <!-- item -->
+            <a ngbDropdownItem [routerLink]="'.'">Delete</a>
+        </div>
+    </div>
+</ng-template>

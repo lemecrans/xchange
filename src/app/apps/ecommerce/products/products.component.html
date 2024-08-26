@@ -1,0 +1,122 @@
+<!-- page title -->
+<app-page-title [breadcrumbItems]="pageTitle" title="Liste des objets"></app-page-title>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row justify-content-between">
+                    <div class="col-auto">
+                        <form class="d-flex flex-wrap align-items-center">
+                            <label for="inputPassword2" class="visually-hidden">Search</label>
+                            <div class="me-3">
+                                <input type="search" class="form-control my-1 my-lg-0" id="inputPassword2" name="search"
+                                    placeholder="Rechercher..." [(ngModel)]="searchTerm"
+                                    (ngModelChange)="searchData($event)">
+                            </div>
+                            <label for="status-select" class="me-2">Trier par</label>
+                            <div class="me-sm-3">
+                                <select class="form-select my-1 my-lg-0" id="status-select">
+                                    <option selected="">Tout</option>
+                                    <option value="1">Disponible</option>
+                                    <option value="2">Indisponible</option>
+                                    <option value="3">Populaire</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-auto">
+                        <div class="text-lg-end my-1 my-lg-0">
+                            <button type="button" class="btn btn-success waves-effect waves-light me-1"><i
+                                    class="mdi mdi-cog"></i></button>
+                            <a [routerLink]="['../products-edit']" class="btn btn-danger waves-effect waves-light"><i
+                                    class="mdi mdi-plus-circle me-1"></i>Ajouter un objet</a>
+                        </div>
+                    </div><!-- end col-->
+                </div> <!-- end row -->
+            </div>
+        </div> <!-- end card -->
+    </div> <!-- end col-->
+</div>
+<!-- end row-->
+
+<div class="row">
+    <div class="col-md-4 col-xl-4" *ngFor="let objet of objets | slice: (page-1) * pageSize : page * pageSize">
+        <div class="card product-box">
+            <div class="card-body">
+                <div class="product-action">
+                    <a [routerLink]="['/apps/crm/contacts']"
+                    [queryParams]="{ id: objet.id}" class="btn btn-success btn-xs waves-effect waves-light me-1"><i
+                            class="mdi mdi-pencil"></i></a>
+                    <a href="javascript: void(0);" class="btn btn-danger btn-xs waves-effect waves-light"><i
+                            class="mdi mdi-close"></i></a>
+                </div>
+
+                <div class="bg-light">
+                    <img [src]="objet.image" alt="product-pic" class="img-fluid" />
+                </div>
+
+                <div class="product-info">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h5 class="font-16 mt-0 sp-line-1"><a [routerLink]="['../liste-objets/details']"
+                                    [queryParams]="{ id: objet.id}" class="text-dark">{{objet.nom}}</a> </h5>
+                            
+                            <h5 class="m-0"> <span class="text-muted"> Propriétaire : {{objet.proprietaire.username}}</span>
+                            </h5>
+                        </div>
+                        <div class="col-auto">
+                            <div class="product-price-tag">
+                                {{ objet.disponible ? 'Disponible' : 'Non Disponible' }}
+                            
+                            <button type="button" class="btn btn-warning waves-effect waves-light" *ngIf="objet.disponible" (click)="openQRModal(objet)">
+                            <span class="btn-label"><i [class]="'mdi mdi-qrcode'"></i></span>QR
+                         </button></div>
+                        </div>
+                    </div> <!-- end row -->
+                </div> <!-- end product info-->
+            </div>
+        </div> <!-- end card-->
+    </div> <!-- end col-->
+    <!-- Loader affiché lorsque les données sont en cours de chargement -->
+    <div *ngIf="isLoading" class="col-12 d-flex justify-content-center align-items-center" style="height: 80vh;">
+        <a href="javascript:void(0);" class="text-danger display-6">
+            <i class="mdi mdi-spin mdi-loading me-1"></i>Chargement
+        </a>
+    </div>
+    
+</div>
+<!-- end row-->
+
+<div class="row">
+    <div class="col-12">
+        <ngb-pagination [collectionSize]="objets.length" class="pagination-rounded d-flex justify-content-end mb-2"
+            [(page)]="page" [pageSize]="pageSize"></ngb-pagination>
+
+    </div> <!-- end col-->
+</div>
+<!-- end row-->
+<ng-template #content let-modal>
+    <div class="modal-header bg-light">
+        <h4 class="modal-title" id="myCenterModalLabel">QR code</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('')"></button>
+    </div>
+    <div class="modal-body p-4">
+            <div class="text-center">
+                <div id="status-chart" *ngIf="objetSelected; else loadQR">
+                    <qrcode
+                    [qrdata]="(objetSelected.id).toString()"
+                    [width]="256"
+                    [errorCorrectionLevel]="'M'"
+                  ></qrcode>
+                  <h1 class="display-4">{{objetSelected.nom}}</h1>
+                </div>
+                <ng-template #loadQR>
+                    <div class="text-center my-4">
+                        <a href="javascript:void(0);" class="text-danger display-6"><i class="mdi mdi-spin mdi-loading me-1"></i>chargement
+                        </a>
+                    </div>  
+                </ng-template>
+            </div>
+    </div>
+</ng-template>

@@ -1,0 +1,86 @@
+<!-- page title -->
+<app-page-title [breadcrumbItems]="pageTitle" title="Modifier un objet"></app-page-title>
+
+<form [formGroup]="updateObjetFormGroup" #updateObjet="ngForm">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="text-uppercase bg-light p-2 mt-0 mb-3">Informations sur l'objet : {{objet?.nom}}</h5>
+                    <div class="mb-3">
+                        <label for="product-name" class="form-label">Designation <span
+                                class="text-danger">*</span></label>
+                        <input type="text" id="product-name" class="form-control" placeholder="exemple : Apple iMac"
+                            formControlName="nom"
+                            [ngClass]="{ 'is-invalid': updateObjetFormGroup.get('nom')?.invalid && (updateObjetFormGroup.get('nom')?.touched || updateObjet.submitted) }">
+                    </div>
+                    <div class="mb-3">
+                        <label for="product-summary" class="form-label">Description</label>
+                        <textarea class="form-control" id="product-summary" rows="3"
+                            placeholder="Ajouter une description..." formControlName="description"
+                            [ngClass]="{ 'is-invalid': updateObjetFormGroup.get('description')?.invalid && (updateObjetFormGroup.get('description')?.touched || updateObjet.submitted) }"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="product-price">Valeur <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="product-price"
+                            placeholder="Estimation en MGA de sa valeur..." formControlName="valeur"
+                            [ngClass]="{ 'is-invalid': updateObjetFormGroup.get('valeur')?.invalid && (updateObjetFormGroup.get('valeur')?.touched || updateObjet.submitted) }">
+                    </div>
+                    <div class="mb-3">
+                        <label class="mb-2">Status <span class="text-danger">*</span></label>
+                        <br />
+                        <div class="d-flex flex-wrap">
+                            <div class="mb-3">
+                                <br />
+                                <div class="d-flex flex-wrap">
+                                    <div class="form-check me-2">
+                                        <input class="form-check-input" type="radio" [value]="true"
+                                            formControlName="disponible" id="inlineRadio1">
+                                        <label class="form-check-label" for="inlineRadio1">Disponible</label>
+                                    </div>
+                                    <div class="form-check me-2">
+                                        <input class="form-check-input" type="radio" [value]="false"
+                                            formControlName="disponible" id="inlineRadio2">
+                                        <label class="form-check-label" for="inlineRadio2">Non disponible</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- end card -->
+        </div> <!-- end col -->
+    </div>
+    <!-- end row -->
+
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <div class="text-center mb-3">
+                <button type="submit" class="btn w-sm btn-success waves-effect waves-light me-1"
+                    (click)="modifier()">Modifier</button>
+            </div>
+        </div> <!-- end col -->
+    </div>
+</form>
+<ng-template #content let-modal>
+    <div class="modal-header bg-light">
+        <h4 class="modal-title" id="myCenterModalLabel">Modification de l'objet</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('')"></button>
+    </div>
+    <div class="modal-body p-4">
+        <div class="text-center">
+            <h3 class="display-7" [ngClass]="{ 'text-success': error == false, 'text-danger': error == true }">{{
+                message }}</h3>
+        </div>
+        <div class="text-center my-4">
+            <span class="text-success display-6" *ngIf="!error;else errorDiv">
+                <i class="mdi mdi-check-underline"></i>
+            </span>
+            <ng-template #errorDiv>
+                <span class="text-danger display-6">
+                    <i class="mdi mdi-alert"></i>
+                </span>
+            </ng-template>
+        </div>
+    </div>
+</ng-template>

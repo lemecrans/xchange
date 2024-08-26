@@ -1,0 +1,16 @@
+<!-- page title -->
+<app-page-title [breadcrumbItems]="pageTitle" title="Chat"></app-page-title>
+
+<div class="row">
+    <div class="col-xl-3 col-lg-4">
+        <app-chat-users [selectedDiscu]="selectedDiscu" (selectDiscu)="onSelectedDiscu($event)"></app-chat-users>
+    </div>
+    <!-- end chat users-->
+
+    <!-- chat area -->
+    <div class="col-xl-9 col-lg-8">
+        <app-chat-area [selectedDiscu]="selectedDiscu"></app-chat-area>
+    </div>
+    <!-- end chat area-->
+
+</div> <!-- end row-->

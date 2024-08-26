@@ -1,0 +1,103 @@
+<!-- page title -->
+<app-page-title [breadcrumbItems]="pageTitle" title="Ajouter un objet"></app-page-title>
+
+<form [formGroup]="newObjet" #addProduct="ngForm">
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="text-uppercase bg-light p-2 mt-0 mb-3">Informations sur l'objet</h5>
+                    <div class="mb-3">
+                        <label for="product-name" class="form-label">Designation <span
+                                class="text-danger">*</span></label>
+                        <input type="text" id="product-name" class="form-control" placeholder="exemple : Apple iMac"
+                            required formControlName="nom"
+                            [ngClass]="{ 'is-invalid': addProduct.submitted && form1.nom.invalid }">
+                    </div>
+                    <div class="mb-3">
+                        <label for="product-summary" class="form-label">Description</label>
+                        <textarea class="form-control" id="product-summary" rows="3" placeholder="Ajouter une description..."
+                            formControlName="description"
+                            [ngClass]="{  'is-invalid': addProduct.submitted && form1.description.invalid }"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="product-price">Valeur <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="product-price" placeholder="Estimation en MGA de sa valeur..." required
+                            formControlName="valeur"
+                            [ngClass]="{  'is-invalid': addProduct.submitted && form1.valeur.invalid }">
+                    </div>
+                    <div class="mb-3">
+                        <label class="mb-2">Status <span class="text-danger">*</span></label>
+                        <br />
+                        <div class="d-flex flex-wrap">
+                            <div class="form-check me-2">
+                                <input class="form-check-input" type="radio" value="true" name="disponible"
+                                    formControlName="disponible" id="inlineRadio1" checked>
+                                <label class="form-check-label" for="inlineRadio1">Disponible</label>
+                            </div>
+                            <div class="form-check me-2">
+                                <input class="form- -input" type="radio" value="false" name="disponible"
+                                    formControlName="disponible" id="inlineRadio2">
+                                <label class="form-check-label" for="inlineRadio2">Non disponible</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- end card -->
+        </div> <!-- end col -->
+
+        <div class="col-lg-6">
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="text-uppercase mt-0 mb-3 bg-light p-2">Image</h5>
+
+                    <ngx-dropzone (change)="onSelect($event)" class="dropzone"
+                        accept="image/png">
+                        <ngx-dropzone-label>
+                            <i class="h1 text-muted dripicons-cloud-upload"></i>
+                            <h3>Glissez une image ici ou cliquez !</h3>
+                        </ngx-dropzone-label>
+                    </ngx-dropzone>
+                    <div class="dropzone-previews mt-3" id="file-previews">
+                        <div id="uploadPreviewTemplate" *ngFor="let f of files">
+                            <div class="card mt-1 mb-0 shadow-none border">
+                                <div class="p-2">
+                                    <div class="row align-items-center">
+                                        <div class="col-auto">
+                                            <img class="avatar-sm rounded bg-light" [alt]="f.name"
+                                                [src]="getPreviewUrl(f)">
+                                        </div>
+                                        <div class="col ps-0">
+                                            <a href="javascript:void(0);" class="text-muted fw-bold">{{f.name}}</a>
+                                            <p class="mb-0">{{getSize(f)}}</p>
+                                        </div>
+                                        <div class="col-auto">
+                                            <a href="javascript:void(0)" class="btn btn-link btn-lg text-muted"
+                                                (click)="onRemove($event)">
+                                                <i class="dripicons-cross"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- end col-->
+        </div> <!-- end col-->
+    </div>
+    <!-- end row -->
+
+    <div class="row">
+        <div class="col-12">
+            <div class="text-center mb-3">
+                <button type="button" class="btn w-sm btn-light waves-effect">Annuler</button>
+                <button type="submit" class="btn w-sm btn-success waves-effect waves-light me-1" (click)="ajouterProduit()">Ajouter</button>
+            </div>
+        </div> <!-- end col -->
+    </div>
+    <!-- end row -->
+
+</form>

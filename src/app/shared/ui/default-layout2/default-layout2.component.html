@@ -1,0 +1,48 @@
+<div class="auth-fluid">
+    <!--Auth fluid left content -->
+    <div class="auth-fluid-form-box">
+        <div class="align-items-center d-flex h-100">
+            <div class="card-body">
+
+                <!-- Logo -->
+                <div class="auth-brand text-center text-lg-start">
+                    <div class="auth-logo">
+                        <a href="javascript:void(0)" class="logo logo-dark text-center">
+                            <span class="logo-lg">
+                                <img src="../assets/images/Logo_sans fond.png"  style="margin: -73px;margin-left: -47%;" height="157">
+                            </span>
+                        </a>
+
+                        <a href="javascript:void(0)" class="logo logo-light text-center">
+                            <span class="logo-lg">
+                                <img src="../assets/images/Logo_sans fond.png"  style="margin: -73px;margin-left: -47%;" height="157">
+                            </span>
+                        </a>
+                    </div>
+                </div>
+
+                <ng-content></ng-content>
+
+
+            </div> <!-- end .card-body -->
+        </div> <!-- end .align-items-center.d-flex.h-100-->
+    </div>
+    <!-- end auth-fluid-form-box-->
+
+    <!-- Auth fluid right content -->
+    <div class="auth-fluid-right text-center">
+        <div class="auth-user-testimonial" *ngIf="showText">
+
+            <h2 class="mb-3 text-white">Une nouvelle façon de partager !</h2>
+            <p class="lead"><i class="mdi mdi-format-quote-open"></i> L'échange d'objets entre utilisateurs a totalement
+                transformé ma manière de consommer. L'application est intuitive et me permet de trouver rapidement ce
+                que je cherche tout en donnant une nouvelle vie à mes propres objets. <i
+                    class="mdi mdi-format-quote-close"></i></p>
+            <h5 class="text-white">
+                ETU- 1084 - 1163 - 1187 (Xchange Admin User)
+            </h5>
+        </div> <!-- end auth-user-testimonial-->
+    </div>
+    <!-- end Auth fluid right content -->
+</div>
+<!-- end auth-fluid-->
