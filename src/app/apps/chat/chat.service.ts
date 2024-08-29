@@ -37,7 +37,7 @@ export class ChatService {
      * @param password password of user
      */
     get(desti: String): any {
-      return this.http.post<any>(URL_BASE+`get?sender=`+this.user?.id+`&desti=`+desti, { })
+      return this.http.post<any>(URL_BASE+`get?sender=2&desti=`+desti, { })
     }
     getAll(): any {
       const URL= URL_BASE+`getall?sender=`+this.user?.id;
@@ -47,7 +47,7 @@ export class ChatService {
     send(desti: String,message: String): any {
       console.log(URL_BASE+`send?sender=`+this.user?.id+`&desti=`+desti);
       console.log({"message":message})
-      return this.http.post<any>(URL_BASE+`send?sender=`+this.user?.id+`&desti=`+desti, {"message":message});
+      return this.http.post<any>(URL_BASE+`send?sender=2&desti=`+desti, {"message":message});
     }
     start(desti: number): any {
       return this.http.post<any>(URL_BASE+`start?sender=2&desti=`+desti, { })
