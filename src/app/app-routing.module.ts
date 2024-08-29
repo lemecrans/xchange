@@ -22,6 +22,11 @@ const routes: Routes = [
     ]
   },
   {
+    path: 'chat',
+    component: PublicLayoutComponent,
+    loadChildren: () => import('./apps/chat/chat.module').then(m => m.ChatModule)
+  },
+  {
     path: 'auth',
     component: PublicLayoutComponent,
     loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
