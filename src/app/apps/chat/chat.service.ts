@@ -45,7 +45,7 @@ export class ChatService {
       return this.http.post<any>(URL, { });
     }
     send(desti: String,message: String): any {
-      return this.http.post<any>(URL_BASE+`send?sender=`+desti+`&desti=2`, message);
+      return this.http.post<any>(URL_BASE+`send?sender=2&desti=`+desti, message);
     }
     start(desti: number): any {
       return this.http.post<any>(URL_BASE+`start?sender=`+desti+`&desti=2`, { })
