@@ -45,9 +45,7 @@ export class ChatService {
       return this.http.post<any>(URL, { });
     }
     send(desti: String,message: String): any {
-      console.log(URL_BASE+`send?sender=`+this.user?.id+`&desti=`+desti);
-      console.log({"message":message})
-      return this.http.post<any>(URL_BASE+`send?sender=2&desti=`+desti, {"message":message});
+      return this.http.post<any>(URL_BASE+`send?sender=`+desti+`&desti=2`, message);
     }
     start(desti: number): any {
       return this.http.post<any>(URL_BASE+`start?sender=`+desti+`&desti=2`, { })

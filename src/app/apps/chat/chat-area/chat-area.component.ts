@@ -62,9 +62,6 @@ export class ChatAreaComponent implements OnInit {
     }, 750);
   }
 
-  /** 
-   * add new message 
-   */
   sendChatMessage(): void {
     this.chatService.send(""+this.selectedDiscu.desti.id,this.newMessage).subscribe( {
       error: (err: any) => {
@@ -75,6 +72,8 @@ export class ChatAreaComponent implements OnInit {
         this.chatService.get(""+this.selectedDiscu.desti.id).subscribe({
           next: (response: any) => {
             this.selectedDiscu= response;
+            this.messages = this.selectedDiscu.discussion;
+            this.newMessage = '';
           },
           error: (err: any) => {
             console.error('Erreur lors de la récupération de l\'objet:', err);
