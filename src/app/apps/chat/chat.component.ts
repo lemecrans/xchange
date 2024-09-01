@@ -18,11 +18,12 @@ export class ChatComponent implements OnInit {
 
   ngOnInit(): void {
     this.pageTitle = [{ label: 'Apps', path: '/', }, { label: 'Chat', path: '/', active: true }];
-
+    console.log(selectedDiscu);
   }
   
   onSelectedDiscu(discu: Discussion): void {
     this.selectedDiscu = discu;
+
   }
 
 }
