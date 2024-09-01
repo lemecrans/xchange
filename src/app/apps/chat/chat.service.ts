@@ -43,7 +43,7 @@ export class ChatService {
       return this.http.post<any>(URL_BASE+`get?sender=`+desti+`&desti=2`, { })
     }
     getAll(): any {
-      const URL= URL_BASE+`getall?sender=`+this.user?.id;
+      const URL= URL_BASE+`getall?sender=2`;
       console.log(URL)
       return this.http.post<any>(URL, { });
     }
