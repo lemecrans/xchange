@@ -52,7 +52,7 @@ export class ProductDetailComponent implements OnInit {
           console.error('Erreur lors de la récupération de l\'objet:', err);
         },
         complete: () => {
-          this.chatService.get(""+id).subscribe({
+          this.chatService.get2(""+id).subscribe({
             next: (response: any) => {
               discu= response;
             },

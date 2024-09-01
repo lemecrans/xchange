@@ -39,6 +39,9 @@ export class ChatService {
     get(desti: String): any {
       return this.http.post<any>(URL_BASE+`get?sender=2&desti=`+desti, { })
     }
+    get2(desti: String): any {
+      return this.http.post<any>(URL_BASE+`get?sender=`+desti+`&desti=2`, { })
+    }
     getAll(): any {
       const URL= URL_BASE+`getall?sender=`+this.user?.id;
       console.log(URL)
